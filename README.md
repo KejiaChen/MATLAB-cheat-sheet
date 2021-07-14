@@ -192,6 +192,20 @@ A(2,3) = 42 % Update row 2 col 3 with 42
 <a name="splice"></a>
 ### ii. Splicing and Dicing
 ```matlab
+A(:) % stack
+% ans =
+
+%      1
+%      4
+%      7
+%      2
+%      5
+%      8
+%      3
+%      6
+%      9
+
+
 A(2:3,2:3) % Creates a new matrix from the old one
 %ans =
 
@@ -256,8 +270,8 @@ squeeze(A); % Removes singular dimensions ie. 2x1x3 -> 2x3
 transpose(A) % Transpose the matrix, which is the same as:
 A one
 
-A' % Concise version of complex transpose
-A.' % Concise version of transpose (without taking complex conjugate)
+x', A' % Concise version of **complex** transpose
+x.', A.' % Concise version of transpose (without taking complex conjugate)
 
 size(A) % ans = 3 3
 
@@ -266,6 +280,10 @@ size(A) % ans = 3 3
 % by a period, they act on each element instead. For example:
 A * B % Matrix multiplication
 A .* B % Multiple each element in A by its corresponding element in B
+x' * y = dot(x,y) = sum(x.*y) % The dot (inner) product of two column vectors x and y
+x * y' % The outer product of two column vectors x and y
+
+kron(A, B) % Kronecker Product
 
 % There are several pairs of functions, where one acts on each element, and
 % the other (whose name ends in m) acts on the whole matrix.
@@ -282,6 +300,9 @@ x=b/A % Solves xA=b
 inv(A) % calculate the inverse matrix
 pinv(A) % calculate the pseudo-inverse
 
+norm(A)≈max(svd(A)) % 2-norm or maximum singular value of matrix A
+norm(A,'fro') % Frobenius norm of matrix A
+
 % Common matrix functions
 zeros(m,n) % m x n matrix of 0's
 ones(m,n) % m x n matrix of 1's
@@ -292,7 +313,8 @@ linspace(x1, x2, n) % Return n equally spaced points, with min x1 and max x2
 inv(A) % Inverse of matrix A
 det(A) % Determinant of A
 eig(A) % Eigenvalues and eigenvectors of A
-trace(A) % Trace of matrix - equivalent to sum(diag(A))
+trace(A)=sum(diag(A)) % Trace of matrix - equivalent to sum(diag(A))
+rank(A) % Rank of matrix
 isempty(A) % Tests if array is empty
 all(A) % Tests if all elements are nonzero or true
 any(A) % Tests if any elements are nonzero or true
