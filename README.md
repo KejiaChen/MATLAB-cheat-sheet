@@ -294,7 +294,7 @@ sqrtm(A) %  find the matrix whose square is A
 
 % Solving matrix equations (if no solution, returns a least squares solution)
 % The \ and / operators are equivalent to the functions mldivide and mrdivide
-x=A\b % Solves Ax=b if A is invertible. Faster and more numerically accurate than using inv(A)*b.
+x=A\b % Solves Ax=b regardless of A is invertible or not. Faster and more numerically accurate than using inv(A)*b.
 x=b/A % Solves xA=b
 x = pinv(A)*b % Solves Ax=b if det(A)=0
 
