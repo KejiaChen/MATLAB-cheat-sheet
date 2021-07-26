@@ -294,8 +294,9 @@ sqrtm(A) %  find the matrix whose square is A
 
 % Solving matrix equations (if no solution, returns a least squares solution)
 % The \ and / operators are equivalent to the functions mldivide and mrdivide
-x=A\b % Solves Ax=b. Faster and more numerically accurate than using inv(A)*b.
+x=A\b % Solves Ax=b if A is invertible. Faster and more numerically accurate than using inv(A)*b.
 x=b/A % Solves xA=b
+x = pinv(A)*b % Solves Ax=b if det(A)=0
 
 inv(A) % calculate the inverse matrix
 pinv(A) % calculate the pseudo-inverse
@@ -351,6 +352,35 @@ find(x) % Finds all non-zero elements of x and returns their indexes, can use co
         % i.e. find( x >= 3 ) returns indexes of elements greater than or equal to 3
 
 ```
+
+### Exam
+
+```matlab
+size(A,B) % 行-列数据
+sum(Matrix, axis=1) % 矩阵的列之和，axis=2则为行之和，=3则为第三维度的和, etc.
+trace(Matrix) % 矩阵对角和--必须为方阵
+A(:) % 以列为顺序（第一列从头到尾-->第二列..）将矩阵拉成列向量
+kron(A, B) % 返回矩阵 A 和 B 的 Kronecker 张量积。如果 A 是 m×n 矩阵，而 B 是 p×q 矩阵，则 kron(A,B)是通过获取 A 元素与矩阵 B 元素之间的所有可能积而形成的一个 m*p×n*q 矩阵
+A.*B % 对应元素相乘
+eye(n) % n*n的单位矩阵
+P = kron(eye(n),eye(m)); kron(A(:),A(:))’*P(:) % P是一个size为(n*m,n*m)的单位阵, 第二个式子相当于求每一个元素平方和--求F-norm
+det(Matrix) % 行列式
+svd(Matrix) % 返回U,S,V, 其中UV是方阵，S是和原矩阵同size的奇异值矩阵
+expm(X) % 计算 X 的矩阵指数。虽然不按此种方式计算，但是如果 X 包含一组完整的特征矢量 V 和对应特征值 D，则 [V,D] = eig(X) 且 expm(X) = V*diag(exp(diag(D)))/V
+A\B % (此处仅考虑A为方阵)尝试计算Ax=B的解，在A满秩的情况下，和inv(A)*B, pinv(A)*B效果一样，结果即为方程的解，若非满秩，则pinv(A)*B不同于A\B
+eig(Matrix) % e = eig(A) 返回一个列矢量，其中包含方阵 A 的特征值。[V,D] = eig(A) 返回特征值的对角矩阵 D 和矩阵 V，其列是对应的右特征矢量，使得 A*V = V*D。[V,D,W] = eig(A) 还返回满矩阵 W，其列是对应的左特征矢量，使得 W'*A = D*W'。
+jacobian(f,v) % 计算函数f关于v的jabobian matrix，此处f为函数句柄
+```
+
+### Chapter 1
+
+```matlab
+null(Matrix) % 返回Matrix的零空间的正交基
+rank(Matrix) % 返回Matrix的rank--重要的几个矩阵乘积的rank变化要记牢--C1 P16
+diag(vector) % 返回一个对角阵，对角元素为vector的值
+
+```
+
 
 
 <a name="plots"></a>
